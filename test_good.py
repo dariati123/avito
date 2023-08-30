@@ -9,7 +9,7 @@ def run(playwright: Playwright) -> None:
     page.locator("button").filter(has_text="Добавить в избранное").click()
     page.get_by_role("link", name="Избранное", exact=True).click()
 
-    # ---------------------
+    # ---------------+-----------
     context.close()
     browser.close()
 
