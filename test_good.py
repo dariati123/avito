@@ -6,10 +6,14 @@ def run(playwright: Playwright) -> None:
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://www.avito.ru/nikel/knigi_i_zhurnaly/domain-driven_design_distilled_vaughn_vernon_2639542363")
-    page.locator("button").filter(has_text="Добавить в избранное").click()
+    favourite = page.locator("button").filter(has_text="Добавить в избранное")
+    favourite.click()
     page.get_by_role("link", name="Избранное", exact=True).click()
+    name_text = page.locator("strong").filter(has_text="Domain-Driven Design Distilled Vaughn Vernon")
+    expect(name_text).to_contain_text("Domain-Driven Design Distilled Vaughn Vernon")
+    expect(favourite.page).to_have_url('https://www.avito.ru/favorites')
 
-    # ---------------+-----------
+    # -----------------------
     context.close()
     browser.close()
 
